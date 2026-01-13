@@ -1,5 +1,7 @@
-let todoTasks = ["Walk Chilli", "Make Dinner"]; // Array 1 - the list of words you want to show on the page
-let todoTasksStatus = [false, true]; // Array 2 - Flags whether a task has been done or not done. eg "Make Dinner" is true therefore has been done.
+let todoTasks = ["Walk Chilli", "Make Dinner"]; // Array 1 - list of tasks
+let todoTasksStatus = [false, true]; // Array 2 - This means walk chilli is false (not done), make dinner is done.
+
+const todoList = document.getElementById("todo-list"); // this is the list itself
 
 const addTask = () => {
   const newTask = document.getElementById("new-task-text");
@@ -21,28 +23,33 @@ const updateTodoList = () => {
 };
 
 const createNewTodoItemElement = (task, index) => {
-  const newTodoTaskTextElement = document.createElement("p");
-  newTodoTaskTextElement.innerText = task;
+  // Create a <p> element to store the task description i.e. "walk chilli". First line creates the paragrapgh, second adds the inner text.
+  const newTodoTaskTextElement = document.createElement("p"); // Creates a new paragraph element ("p")
+  newTodoTaskTextElement.innerText = task; // Creates text inside <p>
 
+  // Apply a CSS class to the completed items
   if (todoTasksStatus[index] == true) {
-    newTodoTaskTextElement.classList.add("complete");
+    newTodoTaskTextElement.classList.add("complete"); // this is a line through in CSS. Affects TEXT line in above <p>
   }
 
-  const newTodoTaskElement = document.createElement("li");
-  newTodoTaskElement.appendChild(newTodoTaskTextElement);
+  //Create a <li> element to contain the paragraph
+  const newTodoTaskElement = document.createElement("li"); // Creates new li element
+  newTodoTaskElement.appendChild(newTodoTaskTextElement); // Puts the <p> text inside the list item.
 
+  // Adding a button to mark each item as complete
   const completeButtonElement = document.createElement("input");
   completeButtonElement.type = "button";
   completeButtonElement.value = "Completed";
   completeButtonElement.onclick = function () {
     toggleComplete(index);
   };
-
   newTodoTaskElement.appendChild(completeButtonElement);
   return newTodoTaskElement;
 };
 
 const toggleComplete = (index) => {
+  // If it is complete, set it to incomplete
+  // If it is incomplete, set it to complete
   if (todoTasksStatus[index] == false) {
     todoTasksStatus[index] = true;
   } else {
@@ -50,5 +57,4 @@ const toggleComplete = (index) => {
   }
   updateTodoList();
 };
-
 updateTodoList();
