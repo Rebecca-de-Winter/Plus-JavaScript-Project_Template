@@ -124,6 +124,7 @@ input[type="button"]:disabled {
 #todo-list input[type="date"] {
   width: 140px;
   font-size: 0.9rem;
+  border-radius: 25px;
 }
 
 #todo-list input[type="button"] {
