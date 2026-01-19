@@ -61,16 +61,72 @@ input[type="button"]:disabled {
 
 .important {
   font-weight: 700;
+  color: red;
 }
 
 .category-exercise {
-  background-color: #e6f4ea;
+  background-color: #8af0a7;
 }
 
 .category-home {
-  background-color: #e6f0ff;
+  background-color: #9debff;
 }
 
 .category-study {
-  background-color: #fff4e6;
+  background-color: #fdf46e;
+}
+
+li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.left,
+.right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.left p {
+  margin: 0;
+}
+
+/* Make disabled arrows visibly disabled even with custom button styling */
+input[type="button"]:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+#todo-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 12px;
+}
+
+#todo-list li .left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1; /* left side takes remaining space */
+  min-width: 0; /* prevents weird overflow */
+}
+
+#todo-list li .right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+#todo-list input[type="date"] {
+  width: 140px;
+  font-size: 0.9rem;
+}
+
+#todo-list input[type="button"] {
+  height: 32px;
+  padding: 0 10px;
 }

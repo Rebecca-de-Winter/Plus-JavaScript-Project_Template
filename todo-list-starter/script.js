@@ -56,105 +56,94 @@ const updateTodoList = () => {
 };
 
 const createNewTodoItemElement = (todoTask, index) => {
-  // Create a <p> element to store the task description i.e. "walk chilli". First line creates the paragraph, second adds the inner text.
-  const newTodoTaskTextElement = document.createElement("p"); // Creates a new paragraph element ("p")
-  newTodoTaskTextElement.innerText = todoTask.task; // Creates text inside <p>
+  const newTodoTaskElement = document.createElement("li");
+  newTodoTaskElement.classList.add(`category-${todoTask.category}`);
 
-  // Apply a CSS class to the completed items
-  if (todoTask.completedTask == true) {
-    newTodoTaskTextElement.classList.add("complete"); // this is a line through in CSS. Affects TEXT line in above <p>
+  // ---- LEFT SIDE (task + due date) ----
+  const left = document.createElement("div");
+  left.classList.add("left");
+
+  const newTodoTaskTextElement = document.createElement("p");
+  newTodoTaskTextElement.innerText = todoTask.task;
+
+  if (todoTask.completedTask === true) {
+    newTodoTaskTextElement.classList.add("complete");
   }
 
-  //Create a <li> element to contain the paragraph
-  const newTodoTaskElement = document.createElement("li"); // Creates new li element
-  newTodoTaskElement.classList.add(`category-${todoTask.category}`); // Creates new class category
-  newTodoTaskElement.appendChild(newTodoTaskTextElement); // Puts the <p> text inside the list item.
+  if (todoTask.important === true) {
+    newTodoTaskTextElement.classList.add("important");
+  }
 
-  // Let the user edit the due date
   const dueInput = document.createElement("input");
   dueInput.type = "date";
-  dueInput.value = todoTask.due || ""; // if it's blank, keep it blank
+  dueInput.value = todoTask.due || "";
   dueInput.onchange = function () {
-    // onchange fires when the user picks a date and the field changes.
-    todoTasks[index].due = dueInput.value; // save whatever they picked
+    todoTasks[index].due = dueInput.value;
     updateTodoList();
   };
 
-  newTodoTaskElement.appendChild(dueInput);
+  left.appendChild(newTodoTaskTextElement);
+  left.appendChild(dueInput);
 
-  // Adding a button to mark each item as complete
+  // ---- RIGHT SIDE (buttons + category) ----
+  const right = document.createElement("div");
+  right.classList.add("right");
+
   const completeButtonElement = document.createElement("input");
   completeButtonElement.type = "button";
-  completeButtonElement.value = "Completed";
+  completeButtonElement.value = todoTask.completedTask ? "Undo" : "Done";
   completeButtonElement.onclick = function () {
     toggleComplete(index);
   };
-  newTodoTaskElement.appendChild(completeButtonElement);
-  // return newTodoTaskElement;  - remove the return until everything is done.
 
-  // Adding an important button to signal that a task is important
   const importantButtonElement = document.createElement("input");
   importantButtonElement.type = "button";
-  importantButtonElement.value = todoTask.important ? "★" : "☆"; // other option is "⭐";
+  importantButtonElement.value = todoTask.important ? "★" : "☆";
   importantButtonElement.onclick = function () {
-    toggleImportant(index); // change toggleComplete to toggleImportant
+    toggleImportant(index);
   };
-  // Apply a CSS class to the important items
-  if (todoTask.important == true) {
-    newTodoTaskTextElement.classList.add("important"); // this is a font weight of 700, set in CSS under .important
-  }
-  newTodoTaskElement.appendChild(importantButtonElement);
 
-  // Adding up button
   const upButton = document.createElement("input");
   upButton.type = "button";
   upButton.value = "↑";
   upButton.onclick = function () {
-    moveUp(index); // change toggleComplete to moveUp
+    moveUp(index);
   };
-  newTodoTaskElement.appendChild(upButton);
 
-  // Adding down button
   const downButton = document.createElement("input");
   downButton.type = "button";
   downButton.value = "↓";
   downButton.onclick = function () {
-    moveDown(index); // change toggleComplete to moveDown
+    moveDown(index);
   };
-  newTodoTaskElement.appendChild(downButton);
 
-  // Disable buttons when moving isn't possible - aka grey the button out. This will need to be updated in CSS!!
+  // Disable arrows when they can't move
   if (index === 0) upButton.disabled = true;
   if (index === todoTasks.length - 1) downButton.disabled = true;
 
-  // const dueDateElement = document.createElement("small"); // renders text one size smaller
-
-  // // If there is a due date, show it. If not, show nothing (or "No due date" if you prefer)
-  // if (todoTask.due) {
-  //   dueDateElement.innerText = `Due: ${todoTask.due}`;
-  // } else {
-  //   dueDateElement.innerText = "";
-  // }
-
-  // newTodoTaskElement.appendChild(dueDateElement);
-
-  // let the user change category after its created
   const categorySelect = document.createElement("select");
   categorySelect.innerHTML = `
-  <option value="home">Home</option>
-  <option value="study">Study</option>
-  <option value="exercise">Exercise</option>
+    <option value="home">Home</option>
+    <option value="study">Study</option>
+    <option value="exercise">Exercise</option>
   `;
   categorySelect.value = todoTask.category;
-
   categorySelect.onchange = function () {
     todoTasks[index].category = categorySelect.value;
     updateTodoList();
   };
 
-  newTodoTaskElement.appendChild(categorySelect);
+  right.appendChild(completeButtonElement);
+  right.appendChild(importantButtonElement);
+  right.appendChild(upButton);
+  right.appendChild(downButton);
+  right.appendChild(categorySelect);
 
-  return newTodoTaskElement; // this goes last!!!!!!!!!!
+  // Put left + right into the li
+  newTodoTaskElement.appendChild(left);
+  newTodoTaskElement.appendChild(right);
+
+  return newTodoTaskElement;
 };
 
 const toggleComplete = (index) => {
