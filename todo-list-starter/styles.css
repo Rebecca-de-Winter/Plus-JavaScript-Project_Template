@@ -47,6 +47,7 @@ input[type="button"]#new-task-button {
 input[type="button"] {
   background: #b30049;
   color: #fff;
+  border-radius: 5px;
 }
 
 input[type="button"]:disabled {
@@ -98,6 +99,11 @@ li {
 input[type="button"]:disabled {
   opacity: 0.4;
   cursor: not-allowed;
+}
+
+.left p.important::before {
+  content: "⭐";
+  font-size: 20px;
 }
 
 #todo-list li {
