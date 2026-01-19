@@ -37,7 +37,7 @@ const addTask = () => {
     }); // add to end of list.
 
     // todoTasksStatus.push(false); // add but give the value of false (not done)
-    newTask.value = ""; // resets input to have nothing after uploading (empty string3.
+    newTask.value = ""; // resets input to have nothing after uploading (empty string).
     newDue.value = ""; //resets date to have nothing after uploading (empty string)
     newCategory.value = "home"; // resets dropdown to be cleared after selection
     updateTodoList();
@@ -92,6 +92,8 @@ const createNewTodoItemElement = (todoTask, index) => {
   const completeButtonElement = document.createElement("input");
   completeButtonElement.type = "button";
   completeButtonElement.value = todoTask.completedTask ? "Undo" : "Done";
+  completeButtonElement.classList.add(todoTask.completedTask ? "undo" : "done");
+
   completeButtonElement.onclick = function () {
     toggleComplete(index);
   };
@@ -99,6 +101,7 @@ const createNewTodoItemElement = (todoTask, index) => {
   const importantButtonElement = document.createElement("input");
   importantButtonElement.type = "button";
   importantButtonElement.value = todoTask.important ? "★" : "☆";
+  importantButtonElement.classList.add("star-button");
   importantButtonElement.onclick = function () {
     toggleImportant(index);
   };

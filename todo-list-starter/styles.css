@@ -30,6 +30,10 @@ p {
   justify-content: space-between;
   background-color: #fff;
 }
+#new-task-input input[type="date"] {
+  font-size: 0.85rem;
+  padding: 4px 6px;
+}
 
 input {
   font-size: 1.2rem;
@@ -136,4 +140,29 @@ input[type="button"]:disabled {
 #todo-list input[type="button"] {
   height: 32px;
   padding: 0 10px;
+}
+/* Star button only  - you can't do .star-button because the pink will override*/
+input[type="button"].star-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  line-height: 1;
+  background-color: #f7e929; /* yellow */
+  color: #333;
+}
+
+input[type="button"].star-button:hover {
+  background-color: #f1cf47;
+}
+/* Done = strong */
+input[type="button"].done {
+  background-color: #b0004f;
+  color: white;
+}
+
+/* Undo = softer */
+input[type="button"].undo {
+  background-color: #f3c1d6;
+  color: #5a0030;
 }
