@@ -1,5 +1,5 @@
 let todoTasks = [
-  //everytime you make a new extension, add it here
+  //every time you make a new extension, add it here. This is two objects in an array.
   {
     task: "Walk Chilli",
     completedTask: false,
@@ -40,13 +40,13 @@ const addTask = () => {
     newTask.value = ""; // resets input to have nothing after uploading (empty string).
     newDue.value = ""; //resets date to have nothing after uploading (empty string)
     newCategory.value = "home"; // resets dropdown to be cleared after selection
-    updateTodoList();
+    updateTodoList(); // add at end.
   }
 };
 
 const updateTodoList = () => {
   const todoList = document.getElementById("todo-list");
-  todoList.innerHTML = ""; // clearing existing inner html (not innertext because we have many list items, not just the inner text of an input). Rids of children of ul.
+  todoList.innerHTML = ""; // clearing existing inner html (not inner text because we have many list items, not just the inner text of an input). Rids of children of ul.
   for (const [index, todoTask] of todoTasks.entries()) {
     // gets index and strings of index together. Other way is to use for loop.
     // built in function of arrays?? Check vs dictionaries.
@@ -106,6 +106,14 @@ const createNewTodoItemElement = (todoTask, index) => {
     toggleImportant(index);
   };
 
+  const deleteButtonElement = document.createElement("input");
+  deleteButtonElement.type = "button";
+  deleteButtonElement.value = "x";
+  deleteButtonElement.classList.add("delete-button");
+  deleteButtonElement.onclick = function () {
+    deleteTask(index);
+  };
+
   const upButton = document.createElement("input");
   upButton.type = "button";
   upButton.value = "↑";
@@ -141,6 +149,7 @@ const createNewTodoItemElement = (todoTask, index) => {
   right.appendChild(upButton);
   right.appendChild(downButton);
   right.appendChild(categorySelect);
+  right.appendChild(deleteButtonElement);
 
   // Put left + right into the li
   newTodoTaskElement.appendChild(left);
@@ -168,6 +177,11 @@ const toggleImportant = (index) => {
   } else {
     todoTasks[index].important = false;
   }
+  updateTodoList();
+};
+
+const deleteTask = (index) => {
+  todoTasks.splice(index, 1);
   updateTodoList();
 };
 
